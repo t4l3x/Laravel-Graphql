@@ -1,0 +1,8 @@
+# types.graphql
+type User {
+    id: ID!
+    name: String!
+    email: String!
+}
+
+scalar DateTime

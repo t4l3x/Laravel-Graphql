@@ -1,0 +1,5 @@
+
+
+#import app/Domains/Authentication/GraphQL/Schemas/queries.graphql
+#import app/Domains/Authentication/GraphQL/Schemas/mutations.graphql
+#import app/Domains/Authentication/GraphQL/Schemas/types.graphql
