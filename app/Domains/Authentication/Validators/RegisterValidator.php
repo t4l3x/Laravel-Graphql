@@ -1,11 +1,9 @@
 <?php
+
 namespace App\Domains\Authentication\Validators;
 
-use App\Domains\Authentication\Models\User;
 use Illuminate\Validation\Rule;
 use Nuwave\Lighthouse\Validation\Validator;
-
-
 
 class RegisterValidator extends Validator
 {

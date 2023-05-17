@@ -1,51 +1,78 @@
 <?php
+
 namespace App\Domains\Authentication\Services;
 
-use App\Domains\Authentication\Exceptions\AuthenticationException;
+use App\Domains\Authentication\Actions\ActivateUser;
+use App\Domains\Authentication\Actions\CreateUser;
+use App\Domains\Authentication\Actions\LoginUser;
+use App\Domains\Authentication\Events\UserRegistered;
+use App\Domains\Authentication\Exceptions\Authentication;
+use App\Domains\Authentication\Exceptions\InvalidActivationToken;
+use App\Domains\Authentication\Exceptions\UserAlreadyActivated;
+use App\Domains\Authentication\Exceptions\UserNotActivated;
+use App\Domains\Authentication\Models\User;
+use App\Domains\Authentication\Models\UserActivation;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Auth;
-use App\Domains\Authentication\Models\User;
-use App\Domains\Authentication\Actions\CreateUser;
-use App\Domains\Authentication\Actions\ActivateUser;
-use App\Domains\Authentication\Exceptions\UserNotActivatedException;
 use Illuminate\Support\Facades\Hash;
 
 class AuthService
 {
+    public function __construct(
+        public CreateUser $createUser,
+        public ActivateUser $activateUser,
+        public LoginUser $loginUser
+    ) {
+    }
+
     public function register(array $data): User
     {
         // This action creates the user and sends the activation email.
-        return app(CreateUser::class)->execute($data);
+        $user = $this->createUser->execute($data);
+
+        event(new UserRegistered($user));
+
+        return $user;
     }
 
     /**
-     * @throws UserNotActivatedException
+     * @throws UserNotActivated
+     * @throws Authentication
      */
     public function login(array $credentials): array
     {
         $user = User::where('email', $credentials['email'])->first();
 
-        if (!$user || !Hash::check($credentials['password'], $user->password)) {
+        if (! $user || ! Hash::check($credentials['password'], $user->password)) {
             event(new Failed(Auth::guard(), $user, $credentials));
-            throw new AuthenticationException('Invalid email or password.');
+            throw new Authentication('Invalid email or password.');
         }
 
-        if (!$user->hasVerifiedEmail()) {
-            throw new UserNotActivatedException('User not activated.');
+        if (! $user->hasVerifiedEmail()) {
+            throw new UserNotActivated('User not activated.', 'email');
         }
 
         event(new Login(Auth::guard(), $user, $credentials['remember']));
 
-        return [
-            'user' => $user,
-            'token' => $user->createToken('authToken')->plainTextToken,
-        ];
+        return $this->loginUser->execute($user);
     }
 
-    public function activateUser(User $user): User
+    /**
+     * @throws UserAlreadyActivated
+     * @throws InvalidActivationToken
+     * @throws UserNotFoundException
+     */
+    public function activateUser($token): User
     {
-        // This action activates the user and sends the welcome email.
-        return app(ActivateUser::class)->execute($user);
+        // Find the token
+        $token = UserActivation::where('token', $token)->first();
+
+        if (! $token) {
+            throw new InvalidActivationToken('Invalid activation token.');
+        }
+
+        // Try to activate the user
+        return $this->activateUser->execute($token->user);
     }
 }

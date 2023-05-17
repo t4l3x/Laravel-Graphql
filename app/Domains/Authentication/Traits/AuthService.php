@@ -4,7 +4,7 @@ namespace App\Domains\Authentication\Traits;
 
 use App\Domains\Authentication\Services\AuthService;
 
-trait AuthServiceTrait
+trait AuthService
 {
     protected AuthService $authService;
 

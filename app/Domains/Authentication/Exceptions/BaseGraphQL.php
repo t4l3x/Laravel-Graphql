@@ -1,16 +1,17 @@
 <?php
 
 namespace App\Domains\Authentication\Exceptions;
+
 use Exception;
 use GraphQL\Error\ClientAware;
 use GraphQL\Error\ProvidesExtensions;
 
-class UserNotActivatedException extends Exception implements ClientAware, ProvidesExtensions
+class BaseGraphQL extends Exception implements ClientAware, ProvidesExtensions
 {
     /** @var @string */
     protected string $reason;
 
-    public function __construct(string $message, string $reason=null)
+    public function __construct(string $message, string $reason = '')
     {
         parent::__construct($message);
 

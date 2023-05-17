@@ -6,19 +6,18 @@ use App\Domains\Authentication\Traits\AuthService;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-class RegisterMutation
+class UserActivationMutation
 {
-
     use AuthService;
 
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo): array
     {
-        $user = $this->authService->register($args['input']);
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $token = $args['input']['token'];
+        $user = $this->authService->activateUser($token);
 
         return [
             'user' => $user,
-            'token' => $token,
+            'message' => 'User account has been activated successfully.',
         ];
     }
 }
