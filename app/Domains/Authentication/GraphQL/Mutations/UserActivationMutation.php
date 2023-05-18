@@ -2,13 +2,13 @@
 
 namespace App\Domains\Authentication\GraphQL\Mutations;
 
-use App\Domains\Authentication\Traits\AuthService;
+use App\Domains\Authentication\Traits\AuthServiceTrait;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
 class UserActivationMutation
 {
-    use AuthService;
+    use AuthServiceTrait;
 
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo): array
     {
