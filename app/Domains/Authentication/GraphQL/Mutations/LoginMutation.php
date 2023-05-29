@@ -3,6 +3,7 @@
 namespace App\Domains\Authentication\GraphQL\Mutations;
 
 use App\Domains\Authentication\Exceptions\Authentication;
+use App\Domains\Authentication\Exceptions\UserNotActivated;
 use App\Domains\Authentication\Services\AuthService;
 use App\Domains\Authentication\Traits\AuthServiceTrait;
 use Illuminate\Validation\ValidationException;
@@ -15,7 +16,8 @@ class LoginMutation
     use AuthServiceTrait;
 
     /**
-     * @throws ValidationException|\App\Domains\Authentication\Exceptions\UserNotActivated
+     * @throws UserNotActivated
+     * @throws Authentication
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo): array
     {
@@ -29,6 +31,7 @@ class LoginMutation
 
 
             return [
+                'context' => $context,
                 'user' => $response['user'],
                 'token' => $response['token'],
             ];

@@ -112,6 +112,19 @@ services:
             NODE_ENV: '${APP_ENV}'
         networks:
             - sail
+
+    rabbitmq:
+        image: rabbitmq:management
+        environment:
+            RABBITMQ_DEFAULT_USER: root
+            RABBITMQ_DEFAULT_PASS: qwerty
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+        volumes:
+            - ./rabbitmq:/var/lib/rabbitmq
+        networks:
+            - sail
 networks:
     sail:
         driver: bridge
