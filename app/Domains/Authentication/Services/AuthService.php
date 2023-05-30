@@ -12,6 +12,7 @@ use App\Domains\Authentication\Exceptions\UserAlreadyActivated;
 use App\Domains\Authentication\Exceptions\UserNotActivated;
 use App\Domains\Authentication\Models\User;
 use App\Domains\Authentication\Models\UserActivation;
+use Exception;
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +40,7 @@ class AuthService
     /**
      * @throws UserNotActivated
      * @throws Authentication
+     * @throws Exception
      */
     public function login(array $credentials): array
     {
