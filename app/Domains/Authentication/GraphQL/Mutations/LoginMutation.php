@@ -4,16 +4,11 @@ namespace App\Domains\Authentication\GraphQL\Mutations;
 
 use App\Domains\Authentication\Exceptions\Authentication;
 use App\Domains\Authentication\Exceptions\UserNotActivated;
-use App\Domains\Authentication\Services\AuthService;
-use App\Domains\Authentication\Traits\AuthServiceTrait;
-use Illuminate\Validation\ValidationException;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-class LoginMutation
+class LoginMutation extends AuthMutation
 {
-
-    use AuthServiceTrait;
 
     /**
      * @throws UserNotActivated

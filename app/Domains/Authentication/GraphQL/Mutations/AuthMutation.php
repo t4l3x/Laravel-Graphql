@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Domains\Authentication\Traits;
+namespace App\Domains\Authentication\GraphQL\Mutations;
 
 use App\Domains\Authentication\Services\AuthService;
 
-trait AuthServiceTrait
+abstract class AuthMutation
 {
     public AuthService $authService;
 

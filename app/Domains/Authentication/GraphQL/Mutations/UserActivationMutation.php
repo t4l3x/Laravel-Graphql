@@ -4,13 +4,11 @@ namespace App\Domains\Authentication\GraphQL\Mutations;
 
 use App\Domains\Authentication\Exceptions\InvalidActivationToken;
 use App\Domains\Authentication\Exceptions\UserAlreadyActivated;
-use App\Domains\Authentication\Traits\AuthServiceTrait;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-class UserActivationMutation
+class UserActivationMutation extends AuthMutation
 {
-    use AuthServiceTrait;
 
     /**
      * @throws InvalidActivationToken

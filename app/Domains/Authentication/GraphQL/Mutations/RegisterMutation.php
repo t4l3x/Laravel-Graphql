@@ -2,14 +2,11 @@
 
 namespace App\Domains\Authentication\GraphQL\Mutations;
 
-use App\Domains\Authentication\Traits\AuthServiceTrait;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-class RegisterMutation
+class RegisterMutation extends AuthMutation
 {
-
-    use AuthServiceTrait;
 
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo): array
     {
