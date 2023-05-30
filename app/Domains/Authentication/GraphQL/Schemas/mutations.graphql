@@ -1,6 +1,6 @@
 type Mutation {
-    register(input: Register!): RegisterPayload @field(resolver: "App\\Domains\\Authentication\\GraphQL\\Mutations\\RegisterMutationBase")
-    login(input: Login!): LoginPayload @field(resolver: "App\\Domains\\Authentication\\GraphQL\\Mutations\\LoginMutationBase")
+    register(input: Register!): RegisterPayload @field(resolver: "App\\Domains\\Authentication\\GraphQL\\Mutations\\RegisterMutation")
+    login(input: Login!): LoginPayload @field(resolver: "App\\Domains\\Authentication\\GraphQL\\Mutations\\LoginMutation")
 }
 
 input Register @validator(class: "App\\Domains\\Authentication\\Validators\\RegisterValidator"){
