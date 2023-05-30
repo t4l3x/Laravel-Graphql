@@ -7,7 +7,7 @@ use App\Domains\Authentication\Exceptions\UserNotActivated;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-class LoginMutation extends AuthMutation
+class LoginMutationBase extends BaseAuthMutation
 {
 
     /**

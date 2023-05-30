@@ -4,7 +4,7 @@ namespace App\Domains\Authentication\GraphQL\Mutations;
 
 use App\Domains\Authentication\Services\AuthService;
 
-abstract class AuthMutation
+abstract class BaseAuthMutation
 {
     public AuthService $authService;
 

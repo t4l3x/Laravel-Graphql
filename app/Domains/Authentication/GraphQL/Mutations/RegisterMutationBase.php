@@ -5,7 +5,7 @@ namespace App\Domains\Authentication\GraphQL\Mutations;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-class RegisterMutation extends AuthMutation
+class RegisterMutationBase extends BaseAuthMutation
 {
 
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo): array
