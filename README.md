@@ -2,6 +2,12 @@
 
 **This project is currently under development  and refactoring time by time.**
 
+
+                95.6%                   88.2%                   100 %                   89.0%  
+                                                                                               
+
+                 Code                 Complexity             Architecture               Style
+
 ## Project Structure
 
 ### Modules
