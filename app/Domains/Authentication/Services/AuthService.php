@@ -27,6 +27,9 @@ class AuthService
     ) {
     }
 
+    /**
+     * @throws Exception
+     */
     public function register(array $data): User
     {
         // This action creates the user and sends the activation email.
@@ -76,5 +79,30 @@ class AuthService
 
         // Try to activate the user
         return $this->activateUser->execute($token->user);
+    }
+
+    public function logout(): void
+    {
+        Auth::guard()->logout();
+    }
+
+    public function forgotPassword(): void
+    {
+
+    }
+
+    public function resetPassword(): void
+    {
+
+    }
+
+    public function changePassword(): void
+    {
+
+    }
+
+    public function changeEmail(): void
+    {
+
     }
 }
